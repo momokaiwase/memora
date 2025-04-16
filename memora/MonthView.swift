@@ -6,10 +6,31 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
 
 struct MonthView: View {
+    @Environment(\.dismiss) private var dismiss
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            Group {
+                //put calendar here
+            }
+            .navigationTitle("month")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Sign Out") {
+                        do {
+                            try Auth.auth().signOut()
+                            print("🪵➡️ Log out successful!")
+                            dismiss()
+                        } catch {
+                            print("😡 ERROR: Could not log out")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
