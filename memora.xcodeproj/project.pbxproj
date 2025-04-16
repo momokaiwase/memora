@@ -16,6 +16,9 @@
 		5A910A5C2DAF2CA900FDD087 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A552DAF2CA900FDD087 /* LoginView.swift */; };
 		5A910A5D2DAF2CA900FDD087 /* memoraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A562DAF2CA900FDD087 /* memoraApp.swift */; };
 		5A910A5E2DAF2CA900FDD087 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A572DAF2CA900FDD087 /* MonthView.swift */; };
+		5A910A602DAF5D2300FDD087 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A5F2DAF5D2300FDD087 /* Entry.swift */; };
+		5A910A622DAF5E2A00FDD087 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A612DAF5E2A00FDD087 /* EntryView.swift */; };
+		5A910A662DAF8AEE00FDD087 /* CalendarWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		5A910A552DAF2CA900FDD087 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5A910A562DAF2CA900FDD087 /* memoraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = memoraApp.swift; sourceTree = "<group>"; };
 		5A910A572DAF2CA900FDD087 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = "<group>"; };
+		5A910A5F2DAF5D2300FDD087 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		5A910A612DAF5E2A00FDD087 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
+		5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWrapper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,9 @@
 				5A910A562DAF2CA900FDD087 /* memoraApp.swift */,
 				5A910A552DAF2CA900FDD087 /* LoginView.swift */,
 				5A910A572DAF2CA900FDD087 /* MonthView.swift */,
+				5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */,
+				5A910A5F2DAF5D2300FDD087 /* Entry.swift */,
+				5A910A612DAF5E2A00FDD087 /* EntryView.swift */,
 				5A910A542DAF2CA900FDD087 /* GoogleService-Info.plist */,
 				5A910A522DAF2CA900FDD087 /* Preview Content */,
 			);
@@ -159,9 +168,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A910A602DAF5D2300FDD087 /* Entry.swift in Sources */,
 				5A910A5C2DAF2CA900FDD087 /* LoginView.swift in Sources */,
+				5A910A622DAF5E2A00FDD087 /* EntryView.swift in Sources */,
 				5A910A5D2DAF2CA900FDD087 /* memoraApp.swift in Sources */,
 				5A910A5E2DAF2CA900FDD087 /* MonthView.swift in Sources */,
+				5A910A662DAF8AEE00FDD087 /* CalendarWrapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

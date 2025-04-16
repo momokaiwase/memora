@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import Firebase
 import FirebaseAuth
 
@@ -14,9 +15,10 @@ struct MonthView: View {
     var body: some View {
         NavigationStack {
             Group {
-                //put calendar here
+                CalendarWrapper()
+                    .frame(height: 400)
             }
-            .navigationTitle("month")
+            //.navigationTitle("month")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Sign Out") {
