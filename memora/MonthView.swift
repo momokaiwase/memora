@@ -12,10 +12,19 @@ import FirebaseAuth
 
 struct MonthView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var selectedDate: DateComponents?
+
     var body: some View {
         NavigationStack {
             Group {
-                CalendarWrapper()
+                CalendarWrapper{dateComponents in
+                   //TODO: lead to entryView
+//                //convert DateComponents to Date
+//                    if let date = Calendar.current.date(from: dateComponents) {
+//                        let entry = Entry(date: date, text: "")
+//                        selectedEntry = entry
+//                    }
+                }
                     .frame(height: 400)
             }
             //.navigationTitle("month")
