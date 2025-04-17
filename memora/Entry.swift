@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Entry: Identifiable, Codable {
+struct Entry: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var date = Date()
     var text = ""
