@@ -9,7 +9,6 @@ import SwiftUI
 
 struct EntryView: View {
     @State var entry: Entry //pass in value from ListView
-    @State var entryVM = EntryViewModel()
     @Environment(\.dismiss) private var dismiss
     var body: some View {
         VStack {
@@ -23,13 +22,22 @@ struct EntryView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Save") {
-                    let success = entryVM.saveEntry(entry: entry)
+                    let success = EntryViewModel.saveEntry(entry: entry)
                     if success {
                         dismiss()
                     } else {
                         print("😡 Dang! Error saving entry!")
                     }
                 }
+            }
+            ToolbarItem(placement: .status) {
+                Button {
+                    EntryViewModel.deleteEntry(entry: entry)
+                    dismiss()
+                } label: {
+                    Image(systemName: "trash")
+                }
+
             }
         }
     }
