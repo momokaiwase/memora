@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct EntryView: View {
+    @FirestoreQuery(collectionPath: "entries") var photos: [Photo]
     @State var entry: Entry //pass in value from ListView
     @Environment(\.dismiss) private var dismiss
     @State private var photoSheetIsPresented = false
@@ -21,6 +24,26 @@ struct EntryView: View {
                 .padding(.horizontal)
             
             Spacer()
+            
+            
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(photos) { photo in
+                        let url = URL(string: photo.imageURLString)
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 80, height: 80)
+                                .clipped()
+                        } placeholder: {
+                            ProgressView()
+                        }
+
+                    }
+                }
+            }
+            .frame(height: 80)
             
             Button { //photo button
                 if entry.id == nil {
@@ -36,6 +59,9 @@ struct EntryView: View {
             .padding()
             .tint(.main)
 
+        }
+        .task {
+            $photos.path = "entries/\(entry.id ?? "")/photos"
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -87,6 +113,6 @@ struct EntryView: View {
 
 #Preview {
     NavigationStack {
-        EntryView(entry: Entry())
+        EntryView(entry: Entry(id: "1", date: Date(), text: "hi"))
     }
 }
