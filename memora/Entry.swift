@@ -21,3 +21,10 @@ struct Entry: Identifiable, Codable, Hashable {
         return formatter.string(from:date)
     }
 }
+
+extension Entry {
+    static var preview: Entry {
+        let newEntry = Entry(id: "1", date: Date(), text: "I went to Boston Public Market")
+        return newEntry
+    }
+}

@@ -10,12 +10,21 @@ import Firebase
 import FirebaseFirestore
 
 struct EntryView: View {
-    @FirestoreQuery(collectionPath: "entries") var photos: [Photo]
+    @FirestoreQuery(collectionPath: "entries") var fsPhotos: [Photo]
     @State var entry: Entry //pass in value from ListView
     @Environment(\.dismiss) private var dismiss
     @State private var photoSheetIsPresented = false
     @State private var showingAlert = false //alert if they need to save entry
     @State private var alertMessage = "Cannot add a Photo until you save the Spot."
+    private var photos: [Photo] {
+        //if running in Preview then show mock data
+        if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+            return [Photo.preview, Photo.preview, Photo.preview, Photo.preview, Photo.preview, Photo.preview]
+        }
+        //Else show Firebase Data
+        return fsPhotos
+    }
+    
     var body: some View {
         VStack {
             Text(entry.formattedDate)
@@ -61,7 +70,7 @@ struct EntryView: View {
 
         }
         .task {
-            $photos.path = "entries/\(entry.id ?? "")/photos"
+            $fsPhotos.path = "entries/\(entry.id ?? "")/photos"
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -113,6 +122,6 @@ struct EntryView: View {
 
 #Preview {
     NavigationStack {
-        EntryView(entry: Entry(id: "1", date: Date(), text: "hi"))
+        EntryView(entry: Entry.preview)
     }
 }
