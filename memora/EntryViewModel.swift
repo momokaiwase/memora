@@ -10,26 +10,26 @@ import FirebaseFirestore
 
 @Observable
 class EntryViewModel {
-    static func saveEntry(entry: Entry) -> Bool {
+    static func saveEntry(entry: Entry) async -> String? { //returns nil if effort fails, otherwise return entry.id
         let db = Firestore.firestore()
         
         if let id = entry.id { //if true, entry exists
             do {
                 try db.collection("entries").document(id).setData(from: entry)
                 print("😎 Data updated successfully!")
-                return true
+                return id
             } catch {
                 print("😡 Could not update data in 'entries' \(error.localizedDescription)")
-                return false
+                return id
             }
         } else { //we need to add a new spot & create a new id / document name
             do {
-                try db.collection("entries").addDocument(from: entry)
+                let docRef = try db.collection("entries").addDocument(from: entry)
                 print("🐣 Data added successfully!")
-                return true
+                return docRef.documentID
             } catch {
                 print("😡 Could not create a new entry in 'entries' \(error.localizedDescription)")
-                return false
+                return nil
             }
         }
     }

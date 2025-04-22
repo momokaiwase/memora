@@ -20,6 +20,9 @@
 		5A910A602DAF5D2300FDD087 /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A5F2DAF5D2300FDD087 /* Entry.swift */; };
 		5A910A622DAF5E2A00FDD087 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A612DAF5E2A00FDD087 /* EntryView.swift */; };
 		5A910A662DAF8AEE00FDD087 /* CalendarWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */; };
+		5AC4A9832DB8215200B58922 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9822DB8215200B58922 /* PhotoView.swift */; };
+		5AC4A9852DB827DA00B58922 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9842DB827DA00B58922 /* Photo.swift */; };
+		5AC4A9872DB8284400B58922 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		5A910A5F2DAF5D2300FDD087 /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
 		5A910A612DAF5E2A00FDD087 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
 		5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWrapper.swift; sourceTree = "<group>"; };
+		5AC4A9822DB8215200B58922 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		5AC4A9842DB827DA00B58922 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +91,9 @@
 				5A910A5F2DAF5D2300FDD087 /* Entry.swift */,
 				5A910A612DAF5E2A00FDD087 /* EntryView.swift */,
 				5A7D53A12DB1872B00A1812C /* EntryViewModel.swift */,
+				5AC4A9822DB8215200B58922 /* PhotoView.swift */,
+				5AC4A9842DB827DA00B58922 /* Photo.swift */,
+				5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */,
 				5A910A542DAF2CA900FDD087 /* GoogleService-Info.plist */,
 				5A910A522DAF2CA900FDD087 /* Preview Content */,
 			);
@@ -174,10 +183,13 @@
 				5A910A602DAF5D2300FDD087 /* Entry.swift in Sources */,
 				5A910A5C2DAF2CA900FDD087 /* LoginView.swift in Sources */,
 				5A910A622DAF5E2A00FDD087 /* EntryView.swift in Sources */,
+				5AC4A9852DB827DA00B58922 /* Photo.swift in Sources */,
 				5A7D53A22DB1872B00A1812C /* EntryViewModel.swift in Sources */,
 				5A910A5D2DAF2CA900FDD087 /* memoraApp.swift in Sources */,
 				5A910A5E2DAF2CA900FDD087 /* MonthView.swift in Sources */,
 				5A910A662DAF8AEE00FDD087 /* CalendarWrapper.swift in Sources */,
+				5AC4A9832DB8215200B58922 /* PhotoView.swift in Sources */,
+				5AC4A9872DB8284400B58922 /* PhotoViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
