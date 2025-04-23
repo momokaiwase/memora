@@ -33,10 +33,12 @@ struct EntryView: View {
     @State private var pickerIsPresented = false //switch to true
     //@State private var selectedImage = Image(systemName: "photo")
     
-    
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedImages: [Image] = []
     @State private var selectedImageData: [Data] = []
+    
+    @State private var timer: Timer?        //timer for autosave
+    @State private var newChanges = false   //track changes to trigger autosave
     
     @Environment(\.dismiss) private var dismiss
     
@@ -44,10 +46,21 @@ struct EntryView: View {
         VStack {
             Text(entry.formattedDate)
             
+            if entry.id != nil {
+                Text("Last updated: \(latestChangeFormatted(for: entry))")
+                    .fontWeight(.light)
+            }
+            
             TextField("Start journal entry of the day...", text: $entry.text, axis: .vertical)
                 .padding(.horizontal)
+                .onChange(of: entry.text) {
+                    newChanges = true
+                    startAutoSaveTimer()
+                }
             
             Spacer()
+            
+            
             
             ScrollView(.horizontal) {
                 HStack {
@@ -94,6 +107,7 @@ struct EntryView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Save") {
                     saveEntry()
+                    timer?.invalidate()
                     dismiss()
                 }
             }
@@ -101,6 +115,7 @@ struct EntryView: View {
             ToolbarItem(placement: .status) {
                 Button {
                     EntryViewModel.deleteEntry(entry: entry)
+                    timer?.invalidate()
                     dismiss()
                 } label: {
                     Image(systemName: "trash")
@@ -151,6 +166,8 @@ struct EntryView: View {
                             return
                         }
                         selectedImageData.append(transferredData)
+                        newChanges = true
+                        startAutoSaveTimer()
                     } catch {
                         print("😡 ERROR loading image/data: \(error.localizedDescription)")
                     }
@@ -176,10 +193,39 @@ struct EntryView: View {
         //        }
     }
     
+    func latestChangeFormatted(for entry: Entry) -> String {
+        let calendar = Calendar.current
+        let isSameDay = calendar.isDate(Date.now, inSameDayAs: entry.latestChange)
+        
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.timeStyle = .short
+        
+        if isSameDay {
+            formatter.dateStyle = .none
+        } else {
+            formatter.dateStyle = .medium
+        }
+        
+        return formatter.string(from: entry.latestChange)
+    }
+    
+    func startAutoSaveTimer() {
+        timer?.invalidate() // cancel previous timer if any
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { _ in
+            if newChanges {
+                saveEntry()
+                newChanges = false
+            }
+        }
+    }
+    
     func saveEntry() {
         Task {
+            entry.latestChange = Date.now
+            
             guard let id = await EntryViewModel.saveEntry(entry: entry) else {
-                print("ERROR: saving entry from Save button")
+                print("ERROR: saving entry")
                 return
             }
             print("entry.id: \(id)")

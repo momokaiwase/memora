@@ -11,6 +11,7 @@ import FirebaseFirestore
 struct Entry: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var date = Date()
+    var latestChange = Date()
     var text = ""
     
     var formattedDate: String {
@@ -24,7 +25,7 @@ struct Entry: Identifiable, Codable, Hashable {
 
 extension Entry {
     static var preview: Entry {
-        let newEntry = Entry(id: "1", date: Date(), text: "I went to Boston Public Market")
+        let newEntry = Entry(id: "1", date: Date(), latestChange: Date(), text: "I went to Boston Public Market")
         return newEntry
     }
 }
