@@ -83,21 +83,45 @@
 		5A910A582DAF2CA900FDD087 /* memora */ = {
 			isa = PBXGroup;
 			children = (
+				5AC4A9C42DB8916A00B58922 /* Models */,
+				5AC4A9C32DB8916100B58922 /* ViewModels */,
+				5AC4A9C22DB8915900B58922 /* Views */,
 				5A910A532DAF2CA900FDD087 /* Assets.xcassets */,
 				5A910A562DAF2CA900FDD087 /* memoraApp.swift */,
-				5A910A552DAF2CA900FDD087 /* LoginView.swift */,
-				5A910A572DAF2CA900FDD087 /* MonthView.swift */,
 				5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */,
-				5A910A5F2DAF5D2300FDD087 /* Entry.swift */,
-				5A910A612DAF5E2A00FDD087 /* EntryView.swift */,
-				5A7D53A12DB1872B00A1812C /* EntryViewModel.swift */,
-				5AC4A9822DB8215200B58922 /* PhotoView.swift */,
-				5AC4A9842DB827DA00B58922 /* Photo.swift */,
-				5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */,
 				5A910A542DAF2CA900FDD087 /* GoogleService-Info.plist */,
 				5A910A522DAF2CA900FDD087 /* Preview Content */,
 			);
 			path = memora;
+			sourceTree = "<group>";
+		};
+		5AC4A9C22DB8915900B58922 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5A910A612DAF5E2A00FDD087 /* EntryView.swift */,
+				5AC4A9822DB8215200B58922 /* PhotoView.swift */,
+				5A910A552DAF2CA900FDD087 /* LoginView.swift */,
+				5A910A572DAF2CA900FDD087 /* MonthView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5AC4A9C32DB8916100B58922 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5A7D53A12DB1872B00A1812C /* EntryViewModel.swift */,
+				5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5AC4A9C42DB8916A00B58922 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5A910A5F2DAF5D2300FDD087 /* Entry.swift */,
+				5AC4A9842DB827DA00B58922 /* Photo.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

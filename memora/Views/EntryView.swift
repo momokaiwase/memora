@@ -8,13 +8,15 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import PhotosUI
 
 struct EntryView: View {
     @FirestoreQuery(collectionPath: "entries") var fsPhotos: [Photo]
     @State var entry: Entry //pass in value from ListView
-    @Environment(\.dismiss) private var dismiss
+    
     @State private var photoSheetIsPresented = false
     @State private var showingAlert = false //alert if they need to save entry
+    
     @State private var alertMessage = "Cannot add a Photo until you save the Spot."
     private var photos: [Photo] {
         //if running in Preview then show mock data
@@ -24,6 +26,14 @@ struct EntryView: View {
         //Else show Firebase Data
         return fsPhotos
     }
+    
+    @State private var photo = Photo()
+    @State private var data = Data() //take image data & convert into data to save it
+    @State private var selectedPhoto: PhotosPickerItem?
+    @State private var pickerIsPresented = false //switch to true
+    @State private var selectedImage = Image(systemName: "photo")
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         VStack {
@@ -54,15 +64,16 @@ struct EntryView: View {
             }
             .frame(height: 80)
             
-            Button { //photo button
+            Button { //button to choose photos
                 if entry.id == nil {
                     showingAlert.toggle()
                 } else {
-                    photoSheetIsPresented.toggle()
+                    pickerIsPresented.toggle()
                 }
             } label: { //go to PhotoView
-                Image(systemName: "camera.fill")
-                Text("Photo")
+                Image(systemName: "photo.on.rectangle")
+                Text("Choose Photo")
+                
             }
             .bold()
             .padding()
@@ -89,6 +100,28 @@ struct EntryView: View {
 
             }
         }
+        
+        //moving photoView into EntryView
+        .photosPicker(isPresented: $pickerIsPresented, selection: $selectedPhoto)
+        .onChange(of: selectedPhoto) {
+            //turn selectedPhoto into a usable Image View
+            Task {
+                do {
+                    if let image = try await selectedPhoto?.loadTransferable(type: Image.self) {
+                        selectedImage = image
+                    }
+                    //get raw data from image to save to firebase Storage
+                    guard let transferredData = try await selectedPhoto?.loadTransferable(type: Data.self) else { print("😡 ERROR: Could not convert data from selectedPhoto.")
+                        return
+                    }
+                    data = transferredData
+                } catch {
+                    print("😡 ERROR: Could not create Image from selectedPhoto.\(error.localizedDescription)")
+                }
+            }
+            
+        }
+        
         .alert(alertMessage, isPresented: $showingAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Save") {
@@ -99,13 +132,13 @@ struct EntryView: View {
                     }
                     entry.id = id
                     print("entry id: \(id)")
-                    photoSheetIsPresented.toggle()
+                    pickerIsPresented.toggle()
                 }
             }
         }
-        .fullScreenCover(isPresented: $photoSheetIsPresented) {
-            PhotoView(entry: entry)
-        }
+//        .fullScreenCover(isPresented: $photoSheetIsPresented) {
+//            PhotoView(entry: entry)
+//        }
     }
     
     func saveEntry() {

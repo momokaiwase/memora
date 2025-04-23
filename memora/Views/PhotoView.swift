@@ -53,25 +53,25 @@ struct PhotoView: View {
                         }
                     }
                 }
-                .photosPicker(isPresented: $pickerIsPresented, selection: $selectedPhoto)
-                .onChange(of: selectedPhoto) {
-                    //turn selectedPhoto into a usable Image View
-                    Task {
-                        do {
-                            if let image = try await selectedPhoto?.loadTransferable(type: Image.self) {
-                                selectedImage = image
-                            }
-                            //get raw data from image to save to firebase Storage
-                            guard let transferredData = try await selectedPhoto?.loadTransferable(type: Data.self) else { print("😡 ERROR: Could not convert data from selectedPhoto.")
-                                return
-                            }
-                            data = transferredData
-                        } catch {
-                            print("😡 ERROR: Could not create Image from selectedPhoto.\(error.localizedDescription)")
-                        }
-                    }
-                    
-                }
+//                .photosPicker(isPresented: $pickerIsPresented, selection: $selectedPhoto)
+//                .onChange(of: selectedPhoto) {
+//                    //turn selectedPhoto into a usable Image View
+//                    Task {
+//                        do {
+//                            if let image = try await selectedPhoto?.loadTransferable(type: Image.self) {
+//                                selectedImage = image
+//                            }
+//                            //get raw data from image to save to firebase Storage
+//                            guard let transferredData = try await selectedPhoto?.loadTransferable(type: Data.self) else { print("😡 ERROR: Could not convert data from selectedPhoto.")
+//                                return
+//                            }
+//                            data = transferredData
+//                        } catch {
+//                            print("😡 ERROR: Could not create Image from selectedPhoto.\(error.localizedDescription)")
+//                        }
+//                    }
+//                    
+//                }
         }
         .padding()
     }
