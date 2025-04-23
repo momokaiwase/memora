@@ -29,9 +29,14 @@ struct EntryView: View {
     
     @State private var photo = Photo()
     @State private var data = Data() //take image data & convert into data to save it
-    @State private var selectedPhoto: PhotosPickerItem?
+    //@State private var selectedPhoto: PhotosPickerItem?
     @State private var pickerIsPresented = false //switch to true
-    @State private var selectedImage = Image(systemName: "photo")
+    //@State private var selectedImage = Image(systemName: "photo")
+    
+    
+    @State private var selectedPhotos: [PhotosPickerItem] = []
+    @State private var selectedImages: [Image] = []
+    @State private var selectedImageData: [Data] = []
     
     @Environment(\.dismiss) private var dismiss
     
@@ -43,7 +48,6 @@ struct EntryView: View {
                 .padding(.horizontal)
             
             Spacer()
-            
             
             ScrollView(.horizontal) {
                 HStack {
@@ -58,7 +62,7 @@ struct EntryView: View {
                         } placeholder: {
                             ProgressView()
                         }
-
+                        
                     }
                 }
             }
@@ -78,10 +82,13 @@ struct EntryView: View {
             .bold()
             .padding()
             .tint(.main)
-
+            
         }
         .task {
-            $fsPhotos.path = "entries/\(entry.id ?? "")/photos"
+            if let entryId = entry.id {
+                $fsPhotos.path = "entries/\(entryId)/photos"
+            }
+            //$fsPhotos.path = "entries/\(entry.id ?? "")/photos"
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -90,6 +97,7 @@ struct EntryView: View {
                     dismiss()
                 }
             }
+            
             ToolbarItem(placement: .status) {
                 Button {
                     EntryViewModel.deleteEntry(entry: entry)
@@ -97,31 +105,58 @@ struct EntryView: View {
                 } label: {
                     Image(systemName: "trash")
                 }
-
+                
             }
         }
         
         //moving photoView into EntryView
-        .photosPicker(isPresented: $pickerIsPresented, selection: $selectedPhoto)
-        .onChange(of: selectedPhoto) {
-            //turn selectedPhoto into a usable Image View
+        //        .photosPicker(isPresented: $pickerIsPresented, selection: $selectedPhotos)
+        
+        //        .onChange(of: selectedPhoto) {
+        //            //turn selectedPhoto into a usable Image View
+        //            Task {
+        //                do {
+        //                    if let image = try await selectedPhoto?.loadTransferable(type: Image.self) {
+        //                        selectedImage = image
+        //                    }
+        //                    //get raw data from image to save to firebase Storage
+        //                    guard let transferredData = try await selectedPhoto?.loadTransferable(type: Data.self) else { print("😡 ERROR: Could not convert data from selectedPhoto.")
+        //                        return
+        //                    }
+        //                    data = transferredData
+        //                } catch {
+        //                    print("😡 ERROR: Could not create Image from selectedPhoto.\(error.localizedDescription)")
+        //                }
+        //            }
+        //        }
+        .photosPicker(
+            isPresented: $pickerIsPresented,
+            selection: $selectedPhotos,
+            maxSelectionCount: 10,
+            matching: .images,
+            photoLibrary: .shared()
+        )
+        .onChange(of: selectedPhotos) { newItems in
             Task {
-                do {
-                    if let image = try await selectedPhoto?.loadTransferable(type: Image.self) {
-                        selectedImage = image
+                selectedImages = []
+                selectedImageData = []
+                
+                for item in newItems {
+                    do {
+                        if let image = try await item.loadTransferable(type: Image.self) {
+                            selectedImages.append(image)
+                        }
+                        guard let transferredData = try await item.loadTransferable(type: Data.self) else {
+                            print("😡 ERROR: Could not get Data from item.")
+                            return
+                        }
+                        selectedImageData.append(transferredData)
+                    } catch {
+                        print("😡 ERROR loading image/data: \(error.localizedDescription)")
                     }
-                    //get raw data from image to save to firebase Storage
-                    guard let transferredData = try await selectedPhoto?.loadTransferable(type: Data.self) else { print("😡 ERROR: Could not convert data from selectedPhoto.")
-                        return
-                    }
-                    data = transferredData
-                } catch {
-                    print("😡 ERROR: Could not create Image from selectedPhoto.\(error.localizedDescription)")
                 }
             }
-            
         }
-        
         .alert(alertMessage, isPresented: $showingAlert) {
             Button("Cancel", role: .cancel) {}
             Button("Save") {
@@ -136,9 +171,9 @@ struct EntryView: View {
                 }
             }
         }
-//        .fullScreenCover(isPresented: $photoSheetIsPresented) {
-//            PhotoView(entry: entry)
-//        }
+        //        .fullScreenCover(isPresented: $photoSheetIsPresented) {
+        //            PhotoView(entry: entry)
+        //        }
     }
     
     func saveEntry() {
@@ -149,6 +184,11 @@ struct EntryView: View {
             }
             print("entry.id: \(id)")
             print("nice Entry save!")
+            
+            for data in selectedImageData {
+               let photo = Photo()
+               await PhotoViewModel.saveImage(entry: entry, photo: photo, data: data)
+               }
         }
     }
 }

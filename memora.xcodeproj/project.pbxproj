@@ -23,6 +23,7 @@
 		5AC4A9832DB8215200B58922 /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9822DB8215200B58922 /* PhotoView.swift */; };
 		5AC4A9852DB827DA00B58922 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9842DB827DA00B58922 /* Photo.swift */; };
 		5AC4A9872DB8284400B58922 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */; };
+		5AC4A9FB2DB96A1B00B58922 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9FA2DB96A1B00B58922 /* SpeechRecognizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		5AC4A9822DB8215200B58922 /* PhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
 		5AC4A9842DB827DA00B58922 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewModel.swift; sourceTree = "<group>"; };
+		5AC4A9FA2DB96A1B00B58922 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				5A910A5F2DAF5D2300FDD087 /* Entry.swift */,
+				5AC4A9FA2DB96A1B00B58922 /* SpeechRecognizer.swift */,
 				5AC4A9842DB827DA00B58922 /* Photo.swift */,
 			);
 			path = Models;
@@ -206,6 +209,7 @@
 			files = (
 				5A910A602DAF5D2300FDD087 /* Entry.swift in Sources */,
 				5A910A5C2DAF2CA900FDD087 /* LoginView.swift in Sources */,
+				5AC4A9FB2DB96A1B00B58922 /* SpeechRecognizer.swift in Sources */,
 				5A910A622DAF5E2A00FDD087 /* EntryView.swift in Sources */,
 				5AC4A9852DB827DA00B58922 /* Photo.swift in Sources */,
 				5A7D53A22DB1872B00A1812C /* EntryViewModel.swift in Sources */,
@@ -350,6 +354,8 @@
 				DEVELOPMENT_TEAM = RPR7B8Y24H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a transcription of your voice audio in the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -379,6 +385,8 @@
 				DEVELOPMENT_TEAM = RPR7B8Y24H;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Audio is recorded to transcribe the meeting. Audio recordings are discarded after transcription.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "You can view a transcription of your voice audio in the app.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
