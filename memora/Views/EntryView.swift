@@ -9,10 +9,11 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 import PhotosUI
+import TranscriptionKit //for speech to text
 
 struct EntryView: View {
     @FirestoreQuery(collectionPath: "entries") var fsPhotos: [Photo]
-    @State var entry: Entry //pass in value from ListView
+    @State var entry: Entry //pass in value from MonthView
     
     @State private var photoSheetIsPresented = false
     @State private var showingAlert = false //alert if they need to save entry
@@ -29,9 +30,8 @@ struct EntryView: View {
     
     @State private var photo = Photo()
     @State private var data = Data() //take image data & convert into data to save it
-    //@State private var selectedPhoto: PhotosPickerItem?
+
     @State private var pickerIsPresented = false //switch to true
-    //@State private var selectedImage = Image(systemName: "photo")
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
     @State private var selectedImages: [Image] = []
@@ -39,6 +39,11 @@ struct EntryView: View {
     
     @State private var timer: Timer?        //timer for autosave
     @State private var newChanges = false   //track changes to trigger autosave
+    
+    @State var speechRecognizer = SpeechRecognizer()
+    @State private var isRecording = false
+    @State private var animateMic = false
+    @State private var speechAsText: String?
     
     @Environment(\.dismiss) private var dismiss
     
@@ -51,17 +56,20 @@ struct EntryView: View {
                     .fontWeight(.light)
             }
             
-            TextField("Start journal entry of the day...", text: $entry.text, axis: .vertical)
-                .padding(.horizontal)
-                .onChange(of: entry.text) {
-                    newChanges = true
-                    startAutoSaveTimer()
+            ScrollView {
+                VStack(alignment: .leading) {
+                    TextField("Start journal entry of the day...", text: $entry.text, axis: .vertical)
+                        .padding(.horizontal)
+                        .onChange(of: entry.text) {
+                            newChanges = true
+                            startAutoSaveTimer()
+                        }
+                    //Spacer()
                 }
+            }
             
             Spacer()
-            
-            
-            
+
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(photos) { photo in
@@ -81,21 +89,41 @@ struct EntryView: View {
             }
             .frame(height: 80)
             
-            Button { //button to choose photos
-                if entry.id == nil {
-                    showingAlert.toggle()
-                } else {
-                    pickerIsPresented.toggle()
+            HStack {
+                Button { //button to choose photos
+                    if entry.id == nil {
+                        showingAlert.toggle()
+                    } else {
+                        pickerIsPresented.toggle()
+                    }
+                } label: { //go to PhotoView
+                    Image(systemName: "photo.on.rectangle")
+                    //Text("Photos")
                 }
-            } label: { //go to PhotoView
-                Image(systemName: "photo.on.rectangle")
-                Text("Choose Photo")
+                .bold()
+                .padding()
+                .tint(.main)
                 
+                Button {
+                    if !isRecording { //first time button is pressed, isRecording = true, starts transcribing
+                        speechRecognizer.resetTranscript()
+                        speechRecognizer.startTranscribing()
+                        isRecording = true
+                        animateMic = true
+                    } else {           //2nd time: isRecording so then stop transcribing
+                        speechRecognizer.stopTranscribing()
+                        isRecording = false
+                        animateMic = false
+                        entry.text += " " + speechRecognizer.transcript
+                    }
+                } label: {
+                    Image(systemName: animateMic ? "microphone.fill" : "microphone")
+                           //.font(.system(size: 40))
+                           .scaleEffect(isRecording && animateMic ? 1.4 : 1.0)
+                           //.foregroundColor(isRecording ? .red : .primary)
+                           .animation(animateMic ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true): .default, value: animateMic)
+                }
             }
-            .bold()
-            .padding()
-            .tint(.main)
-            
         }
         .task {
             if let entryId = entry.id {
@@ -124,26 +152,6 @@ struct EntryView: View {
             }
         }
         
-        //moving photoView into EntryView
-        //        .photosPicker(isPresented: $pickerIsPresented, selection: $selectedPhotos)
-        
-        //        .onChange(of: selectedPhoto) {
-        //            //turn selectedPhoto into a usable Image View
-        //            Task {
-        //                do {
-        //                    if let image = try await selectedPhoto?.loadTransferable(type: Image.self) {
-        //                        selectedImage = image
-        //                    }
-        //                    //get raw data from image to save to firebase Storage
-        //                    guard let transferredData = try await selectedPhoto?.loadTransferable(type: Data.self) else { print("😡 ERROR: Could not convert data from selectedPhoto.")
-        //                        return
-        //                    }
-        //                    data = transferredData
-        //                } catch {
-        //                    print("😡 ERROR: Could not create Image from selectedPhoto.\(error.localizedDescription)")
-        //                }
-        //            }
-        //        }
         .photosPicker(
             isPresented: $pickerIsPresented,
             selection: $selectedPhotos,
@@ -188,9 +196,6 @@ struct EntryView: View {
                 }
             }
         }
-        //        .fullScreenCover(isPresented: $photoSheetIsPresented) {
-        //            PhotoView(entry: entry)
-        //        }
     }
     
     func latestChangeFormatted(for entry: Entry) -> String {
