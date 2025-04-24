@@ -23,9 +23,9 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-//            Image("logo")
-//                .resizable()
-//                .scaledToFit()
+            Image("memora_logo_title")
+                .resizable()
+                .scaledToFit()
             
             Group {
                 TextField("email", text: $email)
