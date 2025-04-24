@@ -54,6 +54,8 @@ struct EntryView: View {
             if entry.id != nil {
                 Text("Last updated: \(latestChangeFormatted(for: entry))")
                     .fontWeight(.light)
+                    .italic()
+                    .foregroundStyle(.secondary)
             }
             
             ScrollView {
@@ -123,6 +125,7 @@ struct EntryView: View {
                            //.foregroundColor(isRecording ? .red : .primary)
                            .animation(animateMic ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true): .default, value: animateMic)
                 }
+                .tint(.main)
             }
         }
         .task {
@@ -148,7 +151,7 @@ struct EntryView: View {
                 } label: {
                     Image(systemName: "trash")
                 }
-                
+                .tint(Color("SubColor"))
             }
         }
         
@@ -184,6 +187,7 @@ struct EntryView: View {
         }
         .alert(alertMessage, isPresented: $showingAlert) {
             Button("Cancel", role: .cancel) {}
+                .tint(.main)
             Button("Save") {
                 Task {
                     guard let id = await EntryViewModel.saveEntry(entry: entry) else {

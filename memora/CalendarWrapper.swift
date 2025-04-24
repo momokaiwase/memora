@@ -19,7 +19,7 @@ struct CalendarWrapper: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<CalendarWrapper>) -> UICalendarView {
         let calendarView = UICalendarView()
-        calendarView.tintColor = .systemMint
+        calendarView.tintColor = .main
         calendarView.availableDateRange = DateInterval(start: .distantPast, end: .now)
         
         //when a date is selected, go to delegate coordinator
