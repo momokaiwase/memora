@@ -1,5 +1,5 @@
-# memora
-## *A digital journal to capture your daily memories 🌟*
+<p style="font-size:28px; font-weight:bold; margin:0;">memora</p>
+<p><em>A digital journal to capture your daily memories 🌟</em></p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a41de46c-ac59-4ca1-94e2-dad6345cddd1" alt="memora_logo_title" width="300"/>
