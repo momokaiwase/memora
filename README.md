@@ -1,5 +1,6 @@
-<p style="font-size:32px; font-weight:600; line-height:1.25; margin-bottom:16px;">memora</p>
-<p style="font-size:24px; font-weight:400; font-style:italic; line-height:1.25;">A digital journal to capture your daily memories 🌟</p>
+# memora
+
+### *A digital journal to capture your daily memories 🌟*
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a41de46c-ac59-4ca1-94e2-dad6345cddd1" alt="memora_logo_title" width="300"/>
