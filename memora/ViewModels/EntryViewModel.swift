@@ -7,15 +7,22 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 @Observable
 class EntryViewModel {
+    
     static func saveEntry(entry: Entry) async -> String? { //returns nil if effort fails, otherwise return entry.id
         let db = Firestore.firestore()
         
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("No userID")
+            return nil
+        }
+        
         if let id = entry.id { //if true, entry exists
             do {
-                try db.collection("entries").document(id).setData(from: entry)
+                try db.collection("users").document(userID).collection("entries").document(id).setData(from: entry)
                 print("😎 Data updated successfully!")
                 return id
             } catch {
@@ -24,7 +31,7 @@ class EntryViewModel {
             }
         } else { //we need to add a new spot & create a new id / document name
             do {
-                let docRef = try db.collection("entries").addDocument(from: entry)
+                let docRef = try db.collection("users").document(userID).collection("entries").addDocument(from: entry)
                 print("🐣 Data added successfully!")
                 return docRef.documentID
             } catch {
@@ -35,6 +42,10 @@ class EntryViewModel {
     }
     
     static func deleteEntry(entry: Entry) {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("No userID")
+            return
+        }
         let db = Firestore.firestore()
         guard let id = entry.id else {
             print("No entry.id")
@@ -42,7 +53,7 @@ class EntryViewModel {
         }
         Task {
             do {
-                try await db.collection("entries").document(id).delete()
+                try await db.collection("users").document(userID).collection("entries").document(id).delete()
             } catch {
                 print("😡 Could not delete document \(id). \(error.localizedDescription)")
             }

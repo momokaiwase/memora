@@ -7,12 +7,14 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 struct Entry: Identifiable, Codable, Hashable {
     @DocumentID var id: String?
     var date = Date()
     var latestChange = Date()
     var text = ""
+    var userID: String
     
     var formattedDate: String {
         let formatter = DateFormatter()
@@ -25,7 +27,7 @@ struct Entry: Identifiable, Codable, Hashable {
 
 extension Entry {
     static var preview: Entry {
-        let newEntry = Entry(id: "1", date: Date(), latestChange: Date(), text: "I went to Boston Public Market")
+        let newEntry = Entry(id: "1", date: Date(), latestChange: Date(), text: "I went to Boston Public Market", userID: "test")
         return newEntry
     }
 }

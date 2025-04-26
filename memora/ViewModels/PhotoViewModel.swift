@@ -19,13 +19,17 @@ class PhotoViewModel {
             return
         }
         
+        let userID = entry.userID
         let storage = Storage.storage().reference()
         let metadata = StorageMetadata()
         if photo.id == nil {
             photo.id = UUID().uuidString //create unique filename for photo about to be saved
         }
         metadata.contentType = "image/jpeg" //allow image to be viewed in browser from Firestore console
-        let path = "\(id)/\(photo.id ?? "n/a")" //id is name of Spot document (spot.id). all photos for a spot will be saved in a "folder" w its spot doc name
+        
+        let path = "users/\(userID)/entries/\(id)/photos/\(photo.id ?? "n/a")"
+        
+        //let path = "\(id)/\(photo.id ?? "n/a")" //id is name of Spot document (spot.id). all photos for a spot will be saved in a "folder" w its spot doc name
         
         do {
             let storageref = storage.child(path)
@@ -43,9 +47,17 @@ class PhotoViewModel {
             //now that photo file is saved to Storage, save a Photo document to the spot.id's "photos" collection
             let db = Firestore.firestore()
             do {
-                try db.collection("entries").document(id).collection("photos").document(photo.id ?? "n/a").setData(from: photo)
+                try db
+                    .collection("users")
+                    .document(userID)
+                    .collection("entries")
+                    .document(id)
+                    .collection("photos")
+                    .document(photo.id ?? "n/a")
+                    .setData(from: photo)
+                
             } catch {
-                print("😡 Could not update data in spots/\(id)/photos/\(photo.id ?? "n/a").\(error.localizedDescription)")
+                print("😡 Could not update data in users/\(userID)/entries/\(id)/photos/\(photo.id ?? "n/a"). \(error.localizedDescription)")
             }
         } catch {
             print("😡 ERROR saving photo to Storage \(error.localizedDescription)")

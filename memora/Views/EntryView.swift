@@ -12,9 +12,6 @@ import PhotosUI
 import TranscriptionKit //for speech to text
 
 struct EntryView: View {
-    @FirestoreQuery(collectionPath: "entries") var fsPhotos: [Photo]
-    @State var entry: Entry //pass in value from MonthView
-    
     @State private var photoSheetIsPresented = false
     @State private var showingAlert = false //alert if they need to save entry
     
@@ -47,7 +44,21 @@ struct EntryView: View {
     
     @StateObject var monthViewModel = MonthViewModel()
     
-    @FirestoreQuery(collectionPath: "entries") var entries: [Entry]
+    @State var entry: Entry //pass in value from MonthView
+    
+    //paths to get photos and entries
+    @FirestoreQuery var fsPhotos: [Photo]
+    @FirestoreQuery var entries: [Entry]
+    init(entry: Entry) {
+        _entry = State(initialValue: entry)
+        
+        // use userId from the entry itself
+        let userId = entry.userID
+        
+        _fsPhotos = FirestoreQuery(collectionPath: "users/\(userId)/entries")
+        _entries = FirestoreQuery(collectionPath: "users/\(userId)/entries")
+    }
+    
     
     @Environment(\.dismiss) private var dismiss
     
@@ -144,8 +155,9 @@ struct EntryView: View {
             .frame(maxWidth: .infinity, alignment: .center)
         }
         .task {
+            let userId = entry.userID
             if let entryId = entry.id {
-                $fsPhotos.path = "entries/\(entryId)/photos"
+                $fsPhotos.path = "users/\(userId)/entries/\(entryId)/photos"
             }
             //$fsPhotos.path = "entries/\(entry.id ?? "")/photos"
         }

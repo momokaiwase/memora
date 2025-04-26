@@ -14,7 +14,8 @@ import FirebaseFirestore
 struct MonthView: View {
     @Environment(\.dismiss) private var dismiss
     
-    @FirestoreQuery(collectionPath: "entries") var entries: [Entry] //loads all "entries" documents into an array var named entries
+    @State private var userID: String = Auth.auth().currentUser?.uid ?? ""
+    @FirestoreQuery(collectionPath: "placeholder") var entries: [Entry] //placeholder path - will loadd all "entries" documents into an array var named entries
     
     @State private var selectedDate: DateComponents?
     @State private var selectedEntry: Entry?
@@ -38,9 +39,6 @@ struct MonthView: View {
                             //get current calendar (Gregorian, time zone, etc.)
                             let calendar = Calendar.current
                             
-                            let year = dateComponents.year
-                            let month = dateComponents.month
-                            
                             //get day (without time components using startOfDay)
                             let startOfDay = calendar.startOfDay(for: selected)
                             
@@ -53,7 +51,7 @@ struct MonthView: View {
                                 selectedEntry = existingEntry
                             } else {
                                 // Create new entry
-                                selectedEntry = Entry(date: startOfDay, text: "")
+                                selectedEntry = Entry(date: startOfDay, text: "", userID: userID)
                             }
                         }
                     },
@@ -78,8 +76,6 @@ struct MonthView: View {
                 )
                 .frame(height: 400)
                 
-                //Spacer()
-                
                 // Display progress bar for the selected month
                 ProgressView(value: Float(monthViewModel.curMonthEntriesCount), total: Float(totalDays))
                     .progressViewStyle(LinearProgressViewStyle())
@@ -87,8 +83,6 @@ struct MonthView: View {
                 Text(" \(monthViewModel.curMonthEntriesCount)/\(totalDays) entries this month")
                 
             }
-            
-            //.navigationTitle("month")
             .navigationDestination(item: $selectedEntry) { entry in
                 EntryView(entry: entry)
             }
@@ -106,6 +100,12 @@ struct MonthView: View {
                 }
             }
         }
+        .onAppear {
+                if let uid = Auth.auth().currentUser?.uid {
+                    userID = uid
+                    $entries.path = "users/\(uid)/entries" //populate path accor to user id
+                }
+            }
         .task(id: entries.count) {
             monthViewModel.updateCount(with: entries, year: displayedYear, month: displayedMonth)
         }
