@@ -1,6 +1,6 @@
 # memora
 
-![memora_logo_title](https://github.com/user-attachments/assets/a41de46c-ac59-4ca1-94e2-dad6345cddd1)
+![memora_logo_title](https://github.com/user-attachments/assets/a41de46c-ac59-4ca1-94e2-dad6345cddd1=250x250)
 
 ## A digital journal to capture your daily memories 🌟
 
