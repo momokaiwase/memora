@@ -30,7 +30,7 @@ struct EntryView: View {
     
     @State private var photo = Photo()
     @State private var data = Data() //take image data & convert into data to save it
-
+    
     @State private var pickerIsPresented = false //switch to true
     
     @State private var selectedPhotos: [PhotosPickerItem] = []
@@ -44,6 +44,10 @@ struct EntryView: View {
     @State private var isRecording = false
     @State private var animateMic = false
     @State private var speechAsText: String?
+    
+    @StateObject var monthViewModel = MonthViewModel()
+    
+    @FirestoreQuery(collectionPath: "entries") var entries: [Entry]
     
     @Environment(\.dismiss) private var dismiss
     
@@ -71,7 +75,7 @@ struct EntryView: View {
             }
             
             Spacer()
-
+            
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(photos) { photo in
@@ -120,10 +124,10 @@ struct EntryView: View {
                     }
                 } label: {
                     Image(systemName: animateMic ? "microphone.fill" : "microphone")
-                           //.font(.system(size: 40))
-                           .scaleEffect(isRecording && animateMic ? 1.4 : 1.0)
-                           //.foregroundColor(isRecording ? .red : .primary)
-                           .animation(animateMic ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true): .default, value: animateMic)
+                    //.font(.system(size: 40))
+                        .scaleEffect(isRecording && animateMic ? 1.4 : 1.0)
+                    //.foregroundColor(isRecording ? .red : .primary)
+                        .animation(animateMic ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true): .default, value: animateMic)
                 }
                 .tint(.main)
             }
@@ -197,7 +201,7 @@ struct EntryView: View {
                     entry.id = id
                     print("entry id: \(id)")
                     pickerIsPresented.toggle()
-                }
+                } //ISSUE: NEW ENTRIES DOUBLE SAVING FOR SOME REASON
             }
         }
     }
@@ -233,6 +237,7 @@ struct EntryView: View {
         Task {
             entry.latestChange = Date.now
             
+            //save entry
             guard let id = await EntryViewModel.saveEntry(entry: entry) else {
                 print("ERROR: saving entry")
                 return
@@ -240,10 +245,12 @@ struct EntryView: View {
             print("entry.id: \(id)")
             print("nice Entry save!")
             
+            //save images
             for data in selectedImageData {
-               let photo = Photo()
-               await PhotoViewModel.saveImage(entry: entry, photo: photo, data: data)
-               }
+                let photo = Photo()
+                await PhotoViewModel.saveImage(entry: entry, photo: photo, data: data)
+            }
+            
         }
     }
 }
