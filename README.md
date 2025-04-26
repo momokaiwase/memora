@@ -1,10 +1,10 @@
-# memora
-
-### *A digital journal to capture your daily memories 🌟*
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a41de46c-ac59-4ca1-94e2-dad6345cddd1" alt="memora_logo_title" width="300"/>
 </p>
+
+# memora
+
+### *A digital journal to capture your daily memories 🌟*
 
 ## Technologies Used
 
