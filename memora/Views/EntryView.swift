@@ -18,7 +18,7 @@ struct EntryView: View {
     @State private var photoSheetIsPresented = false
     @State private var showingAlert = false //alert if they need to save entry
     
-    @State private var alertMessage = "Cannot add a Photo until you save the Spot."
+    @State private var alertMessage = "Cannot add a Photo until you save the journal entry."
     private var photos: [Photo] {
         //if running in Preview then show mock data
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
