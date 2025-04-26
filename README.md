@@ -28,4 +28,6 @@
   - Add text and photos
   - Speech-to-text
 
-![Screenshot 2025-04-25 at 21 52 26](https://github.com/user-attachments/assets/7e0613df-cb2a-4862-bb3c-783f5d0e2cb0)
+![Screenshot 2025-04-25 at 22 26 37](https://github.com/user-attachments/assets/887bf013-1421-43c0-9619-5473d8dd34a9)
+
+
