@@ -28,6 +28,7 @@
   - Add text and photos
   - Speech-to-text
 
-![Screenshot 2025-04-25 at 22 26 37](https://github.com/user-attachments/assets/887bf013-1421-43c0-9619-5473d8dd34a9)
+<img src="https://github.com/user-attachments/assets/887bf013-1421-43c0-9619-5473d8dd34a9" width="500" />
+
 
 
