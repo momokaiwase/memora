@@ -96,6 +96,9 @@ struct EntryView: View {
             .frame(height: 80)
             
             HStack {
+                
+                Spacer()
+                
                 Button { //button to choose photos
                     if entry.id == nil {
                         showingAlert.toggle()
@@ -107,8 +110,10 @@ struct EntryView: View {
                     //Text("Photos")
                 }
                 .bold()
-                .padding()
                 .tint(.main)
+                .font(.system(size: 23))
+                
+                Spacer()
                 
                 Button {
                     if !isRecording { //first time button is pressed, isRecording = true, starts transcribing
@@ -129,8 +134,14 @@ struct EntryView: View {
                     //.foregroundColor(isRecording ? .red : .primary)
                         .animation(animateMic ? .easeInOut(duration: 0.8).repeatForever(autoreverses: true): .default, value: animateMic)
                 }
+                .font(.system(size: 23))
+                .bold()
                 .tint(.main)
+                
+                Spacer()
             }
+            .padding()
+            .frame(maxWidth: .infinity, alignment: .center)
         }
         .task {
             if let entryId = entry.id {
