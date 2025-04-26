@@ -25,6 +25,7 @@
   - Progress tracker for each month
 - Journal Entries 📖
   - Create and view entries
+  - Auto-save upon edits
   - Add text and photos
   - Speech-to-text
 
