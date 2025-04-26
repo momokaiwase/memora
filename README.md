@@ -33,4 +33,7 @@
 <img src="https://github.com/user-attachments/assets/887bf013-1421-43c0-9619-5473d8dd34a9" width="450" />
 </p>
 
+[![Watch the demo](https://img.youtube.com/vi/vSfgcijJ6uo/maxresdefault.jpg)](https://youtube.com/shorts/vSfgcijJ6uo)
+
+
 
