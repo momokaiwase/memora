@@ -44,6 +44,9 @@ struct EntryView: View {
     
     @StateObject var monthViewModel = MonthViewModel()
     
+    //to prevent double saving new entries
+    @State private var isSaving = false
+    
     @State var entry: Entry //pass in value from MonthView
     
     //paths to get photos and entries
@@ -257,6 +260,9 @@ struct EntryView: View {
     }
     
     func saveEntry() {
+        guard !isSaving else {return}
+        isSaving = true
+        
         Task {
             entry.latestChange = Date.now
             
