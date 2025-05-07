@@ -10,6 +10,7 @@
 		5A02B31C2DAF003000A30261 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5A02B31B2DAF003000A30261 /* FirebaseAuth */; };
 		5A02B31E2DAF003000A30261 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5A02B31D2DAF003000A30261 /* FirebaseFirestore */; };
 		5A02B3202DAF003000A30261 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5A02B31F2DAF003000A30261 /* FirebaseStorage */; };
+		5A6AC6D52DCC071A004CAF95 /* TranscriptionKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5A6AC6D42DCC071A004CAF95 /* TranscriptionKit */; };
 		5A7D53A22DB1872B00A1812C /* EntryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7D53A12DB1872B00A1812C /* EntryViewModel.swift */; };
 		5A8A71E92DBBE65900886C9D /* MonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8A71E82DBBE65900886C9D /* MonthViewModel.swift */; };
 		5A910A592DAF2CA900FDD087 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A910A512DAF2CA900FDD087 /* Preview Assets.xcassets */; };
@@ -23,7 +24,6 @@
 		5A910A662DAF8AEE00FDD087 /* CalendarWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A910A652DAF8AEE00FDD087 /* CalendarWrapper.swift */; };
 		5AC4A9852DB827DA00B58922 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9842DB827DA00B58922 /* Photo.swift */; };
 		5AC4A9872DB8284400B58922 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4A9862DB8284400B58922 /* PhotoViewModel.swift */; };
-		5AC4A9FE2DB9CBCB00B58922 /* TranscriptionKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5AC4A9FD2DB9CBCB00B58922 /* TranscriptionKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5AC4A9FE2DB9CBCB00B58922 /* TranscriptionKit in Frameworks */,
+				5A6AC6D52DCC071A004CAF95 /* TranscriptionKit in Frameworks */,
 				5A02B31C2DAF003000A30261 /* FirebaseAuth in Frameworks */,
 				5A02B31E2DAF003000A30261 /* FirebaseFirestore in Frameworks */,
 				5A02B3202DAF003000A30261 /* FirebaseStorage in Frameworks */,
@@ -149,6 +149,7 @@
 				5A02B31D2DAF003000A30261 /* FirebaseFirestore */,
 				5A02B31F2DAF003000A30261 /* FirebaseStorage */,
 				5AC4A9FD2DB9CBCB00B58922 /* TranscriptionKit */,
+				5A6AC6D42DCC071A004CAF95 /* TranscriptionKit */,
 			);
 			productName = memora;
 			productReference = 5A02B3092DAEFEB700A30261 /* memora.app */;
@@ -180,7 +181,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5A02B31A2DAF003000A30261 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				5AC4A9FC2DB9CBCB00B58922 /* XCLocalSwiftPackageReference "../../../Downloads/TranscribingSpeechToText/Complete/TutorialResources/TranscriptionKit" */,
+				5A6AC6D32DCC071A004CAF95 /* XCLocalSwiftPackageReference "TranscriptionKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5A02B30A2DAEFEB700A30261 /* Products */;
@@ -431,9 +432,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		5AC4A9FC2DB9CBCB00B58922 /* XCLocalSwiftPackageReference "../../../Downloads/TranscribingSpeechToText/Complete/TutorialResources/TranscriptionKit" */ = {
+		5A6AC6D32DCC071A004CAF95 /* XCLocalSwiftPackageReference "TranscriptionKit" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../Downloads/TranscribingSpeechToText/Complete/TutorialResources/TranscriptionKit;
+			relativePath = TranscriptionKit;
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -463,6 +464,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5A02B31A2DAF003000A30261 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		5A6AC6D42DCC071A004CAF95 /* TranscriptionKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TranscriptionKit;
 		};
 		5AC4A9FD2DB9CBCB00B58922 /* TranscriptionKit */ = {
 			isa = XCSwiftPackageProductDependency;
